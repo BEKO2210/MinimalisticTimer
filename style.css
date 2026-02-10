@@ -1,0 +1,710 @@
+/* ================================================================
+   PRECISION TIMER — Style System
+   Brutalist minimal design · Black & white · Monospace
+   ================================================================ */
+
+/* --- Custom Properties --- */
+:root {
+  --bg: #000;
+  --fg: #fff;
+  --dim: #555;
+  --dimmer: #333;
+  --accent-ok: #0f0;
+  --accent-bad: #f44;
+  --font: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', 'Courier New', monospace;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  min-height: 100dvh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  text-transform: uppercase;
+}
+
+/* --- Grid Background --- */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--dimmer) 1px, transparent 1px),
+    linear-gradient(90deg, var(--dimmer) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- App Container --- */
+.app {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  min-height: 100dvh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1.25rem 6rem;
+}
+
+/* --- Mode Navigation --- */
+.mode-nav {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  border: 1px solid var(--dim);
+  margin-bottom: 2rem;
+  flex-shrink: 0;
+}
+
+.mode-tab {
+  flex: 1;
+  background: transparent;
+  color: var(--dim);
+  border: none;
+  border-right: 1px solid var(--dim);
+  padding: 0.75rem 0.5rem;
+  font-family: var(--font);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.mode-tab:last-child {
+  border-right: none;
+}
+
+.mode-tab:hover {
+  color: var(--fg);
+}
+
+.mode-tab.active {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* --- Panels --- */
+.panel {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.panel.active {
+  display: flex;
+}
+
+/* --- Main Display --- */
+.main-display {
+  font-size: clamp(2.8rem, 14vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  padding: 1.5rem 0;
+  width: 100%;
+  position: relative;
+}
+
+.ms {
+  font-size: 0.38em;
+  opacity: 0.5;
+  vertical-align: baseline;
+  display: inline-block;
+  width: 4ch;
+  text-align: left;
+}
+
+/* --- Sub-toggle (Duration/Target) --- */
+.sub-toggle {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--dim);
+  width: 100%;
+  max-width: 280px;
+}
+
+.sub-btn {
+  flex: 1;
+  background: transparent;
+  color: var(--dim);
+  border: none;
+  border-right: 1px solid var(--dim);
+  padding: 0.5rem;
+  font-family: var(--font);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.sub-btn:last-child {
+  border-right: none;
+}
+
+.sub-btn.active {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* --- Duration Input --- */
+.duration-input {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  justify-content: center;
+}
+
+.dg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.dg input {
+  background: transparent;
+  border: 1px solid var(--dimmer);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  width: 3.5rem;
+  padding: 0.3rem;
+  outline: none;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+  transition: border-color 0.2s var(--ease);
+}
+
+.dg input::-webkit-inner-spin-button,
+.dg input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dg input:focus {
+  border-color: var(--fg);
+}
+
+.dg-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: var(--dim);
+}
+
+.dg-sep {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dim);
+  padding: 0 0.1rem;
+  align-self: center;
+  margin-bottom: 1.5rem;
+}
+
+.adj {
+  background: transparent;
+  border: 1px solid var(--dimmer);
+  color: var(--dim);
+  font-size: 0.6rem;
+  width: 3.5rem;
+  padding: 0.3rem;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.15s var(--ease);
+}
+
+.adj:hover {
+  border-color: var(--fg);
+  color: var(--fg);
+}
+
+.adj:active {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* --- Target Time Input --- */
+.target-input {
+  text-align: center;
+}
+
+.target-input input[type="time"] {
+  background: transparent;
+  border: 1px solid var(--dimmer);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease);
+}
+
+.target-input input[type="time"]:focus {
+  border-color: var(--fg);
+}
+
+.target-input input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+/* --- Presets --- */
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.preset {
+  background: transparent;
+  border: 1px solid var(--dimmer);
+  color: var(--dim);
+  font-family: var(--font);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s var(--ease);
+}
+
+.preset:hover {
+  border-color: var(--fg);
+  color: var(--fg);
+}
+
+.preset:active,
+.preset.active {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* --- Controls --- */
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.btn {
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 0.9rem 2rem;
+  cursor: pointer;
+  border: 2px solid var(--fg);
+  transition: transform 0.1s, background 0.15s var(--ease), color 0.15s var(--ease);
+  min-width: 7rem;
+  text-align: center;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.btn-primary:hover {
+  background: #ddd;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--fg);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--accent-bad);
+  border-color: var(--accent-bad);
+}
+
+.btn-danger:hover {
+  background: rgba(255, 68, 68, 0.15);
+}
+
+/* --- Stopwatch Precision Badge --- */
+.sw-precision {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  text-align: center;
+  margin-top: -1rem;
+}
+
+/* --- Lap List --- */
+.lap-container {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 0.5rem;
+}
+
+.lap-header {
+  display: grid;
+  grid-template-columns: 3rem 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+  border-bottom: 1px solid var(--dimmer);
+}
+
+.lap-list {
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--dimmer) transparent;
+}
+
+.lap-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.lap-list::-webkit-scrollbar-thumb {
+  background: var(--dimmer);
+}
+
+.lap-row {
+  display: grid;
+  grid-template-columns: 3rem 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: opacity 0.2s;
+}
+
+.lap-row:first-child {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.lap-best .lap-split {
+  color: var(--accent-ok);
+}
+
+.lap-worst .lap-split {
+  color: var(--accent-bad);
+}
+
+.lap-num {
+  color: var(--dim);
+}
+
+/* --- Clock --- */
+.clock-date {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--dim);
+  text-align: center;
+}
+
+.clock-utc {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.world-clocks {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.wc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--dimmer);
+  font-variant-numeric: tabular-nums;
+}
+
+.wc-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+  flex: 1;
+}
+
+.wc-time {
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.wc-remove {
+  background: none;
+  border: none;
+  color: var(--dimmer);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0 0 0 0.75rem;
+  font-family: var(--font);
+  transition: color 0.15s;
+}
+
+.wc-remove:hover {
+  color: var(--accent-bad);
+}
+
+/* --- Timezone Select --- */
+.tz-add {
+  width: 100%;
+  max-width: 300px;
+}
+
+.tz-add select {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--dimmer);
+  color: var(--dim);
+  font-family: var(--font);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.6rem 0.75rem;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  text-transform: uppercase;
+  transition: border-color 0.2s var(--ease);
+}
+
+.tz-add select:focus {
+  border-color: var(--fg);
+  color: var(--fg);
+}
+
+.tz-add select option {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* --- Toolbar --- */
+.toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(transparent, var(--bg) 30%);
+  padding-top: 2rem;
+  z-index: 50;
+}
+
+.tool-btn {
+  background: transparent;
+  border: 1px solid var(--dimmer);
+  color: var(--dim);
+  font-family: var(--font);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  transition: all 0.15s var(--ease);
+  min-width: 4.5rem;
+}
+
+.tool-btn:first-child {
+  border-right: none;
+}
+
+.tool-btn:last-child {
+  border-left: none;
+}
+
+.tool-btn:hover {
+  color: var(--fg);
+  border-color: var(--dim);
+}
+
+.tool-btn.active {
+  color: var(--fg);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tool-icon {
+  font-size: 1rem;
+}
+
+.tool-lbl {
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+}
+
+/* --- Keyboard Shortcuts Hint --- */
+.kb-hint {
+  position: fixed;
+  bottom: 4.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  color: var(--dimmer);
+  white-space: nowrap;
+  z-index: 40;
+  display: none;
+}
+
+kbd {
+  border: 1px solid var(--dimmer);
+  padding: 0.1rem 0.3rem;
+  margin-right: 0.15rem;
+  font-family: var(--font);
+  font-size: inherit;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kb-hint {
+    display: block;
+  }
+}
+
+/* --- Utility --- */
+.hidden {
+  display: none !important;
+}
+
+/* --- Alarm State --- */
+.alarm-active .main-display {
+  animation: alarm-pulse 0.5s ease-in-out infinite;
+}
+
+.alarm-active .panel.active {
+  border-color: var(--fg);
+}
+
+@keyframes alarm-pulse {
+  0%, 100% { opacity: 1; text-shadow: 0 0 30px rgba(255, 255, 255, 0.6); }
+  50% { opacity: 0.2; text-shadow: none; }
+}
+
+/* --- Timer Setup hide during run --- */
+.timer-running .timer-setup {
+  display: none;
+}
+
+/* --- Progress Bar (timer) --- */
+.progress-bar {
+  width: 100%;
+  height: 2px;
+  background: var(--dimmer);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--fg);
+  transition: width 0.1s linear;
+}
+
+/* --- Responsive --- */
+@media (min-width: 600px) {
+  .main-display {
+    font-size: 5.5rem;
+  }
+  .app {
+    justify-content: center;
+    min-height: auto;
+    padding-top: 2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .dg input {
+    font-size: 1.5rem;
+    width: 2.8rem;
+  }
+  .dg-sep {
+    font-size: 1.5rem;
+  }
+  .adj {
+    width: 2.8rem;
+  }
+  .preset {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.6rem;
+  }
+}
+
+/* --- Safe area (notch devices) --- */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .toolbar {
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* --- Print --- */
+@media print {
+  .grid-bg, .toolbar, .kb-hint, .controls, .timer-setup, .tz-add {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .main-display {
+    color: #000;
+  }
+}

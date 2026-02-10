@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#000" rx="80"/>
+  <circle cx="256" cy="270" r="180" fill="none" stroke="#fff" stroke-width="14"/>
+  <!-- Hour ticks -->
+  <g stroke="#fff" stroke-width="6" stroke-linecap="square">
+    <line x1="256" y1="104" x2="256" y2="124"/>
+    <line x1="256" y1="416" x2="256" y2="436"/>
+    <line x1="90" y1="270" x2="110" y2="270"/>
+    <line x1="402" y1="270" x2="422" y2="270"/>
+    <!-- 45-degree ticks -->
+    <line x1="383.3" y1="142.7" x2="369.1" y2="156.9"/>
+    <line x1="128.7" y1="142.7" x2="142.9" y2="156.9"/>
+    <line x1="383.3" y1="397.3" x2="369.1" y2="383.1"/>
+    <line x1="128.7" y1="397.3" x2="142.9" y2="383.1"/>
+  </g>
+  <!-- Minute hand -->
+  <line x1="256" y1="270" x2="256" y2="120" stroke="#fff" stroke-width="10" stroke-linecap="square"/>
+  <!-- Hour hand -->
+  <line x1="256" y1="270" x2="350" y2="200" stroke="#fff" stroke-width="12" stroke-linecap="square"/>
+  <!-- Center dot -->
+  <circle cx="256" cy="270" r="10" fill="#fff"/>
+  <!-- Top crown -->
+  <rect x="244" y="60" width="24" height="30" rx="4" fill="#fff"/>
+</svg>

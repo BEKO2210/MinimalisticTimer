@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>PRECISION TIMER</title>
+  <meta name="description" content="Professional precision timer, stopwatch &amp; world clock PWA">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Timer">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <main class="app" id="app">
+    <!-- Mode Navigation -->
+    <nav class="mode-nav" role="tablist" aria-label="Timer modes">
+      <button class="mode-tab active" role="tab" aria-selected="true" data-mode="timer">TIMER</button>
+      <button class="mode-tab" role="tab" aria-selected="false" data-mode="stopwatch">STOPWATCH</button>
+      <button class="mode-tab" role="tab" aria-selected="false" data-mode="clock">CLOCK</button>
+    </nav>
+
+    <!-- ===== TIMER ===== -->
+    <section class="panel active" id="panel-timer" role="tabpanel" aria-label="Countdown Timer">
+      <div class="main-display" id="timer-display">
+        00:00:00<span class="ms">.000</span>
+      </div>
+
+      <div class="timer-setup" id="timer-setup">
+        <!-- Duration / Target toggle -->
+        <div class="sub-toggle">
+          <button class="sub-btn active" data-tmode="duration">DURATION</button>
+          <button class="sub-btn" data-tmode="target">TARGET</button>
+        </div>
+
+        <!-- Duration input -->
+        <div class="duration-input" id="duration-input">
+          <div class="dg">
+            <button class="adj" data-field="t-h" data-dir="1" aria-label="Increase hours">&#x25B2;</button>
+            <input type="number" id="t-h" min="0" max="99" value="0" inputmode="numeric" aria-label="Hours">
+            <button class="adj" data-field="t-h" data-dir="-1" aria-label="Decrease hours">&#x25BC;</button>
+            <span class="dg-label">HRS</span>
+          </div>
+          <span class="dg-sep">:</span>
+          <div class="dg">
+            <button class="adj" data-field="t-m" data-dir="1" aria-label="Increase minutes">&#x25B2;</button>
+            <input type="number" id="t-m" min="0" max="59" value="5" inputmode="numeric" aria-label="Minutes">
+            <button class="adj" data-field="t-m" data-dir="-1" aria-label="Decrease minutes">&#x25BC;</button>
+            <span class="dg-label">MIN</span>
+          </div>
+          <span class="dg-sep">:</span>
+          <div class="dg">
+            <button class="adj" data-field="t-s" data-dir="1" aria-label="Increase seconds">&#x25B2;</button>
+            <input type="number" id="t-s" min="0" max="59" value="0" inputmode="numeric" aria-label="Seconds">
+            <button class="adj" data-field="t-s" data-dir="-1" aria-label="Decrease seconds">&#x25BC;</button>
+            <span class="dg-label">SEC</span>
+          </div>
+        </div>
+
+        <!-- Target time input -->
+        <div class="target-input hidden" id="target-input">
+          <input type="time" id="target-time" step="1" aria-label="Target time">
+        </div>
+
+        <!-- Quick presets -->
+        <div class="presets" id="presets">
+          <button class="preset" data-sec="30">30S</button>
+          <button class="preset" data-sec="60">1M</button>
+          <button class="preset" data-sec="300">5M</button>
+          <button class="preset" data-sec="600">10M</button>
+          <button class="preset" data-sec="900">15M</button>
+          <button class="preset" data-sec="1800">30M</button>
+          <button class="preset" data-sec="3600">1H</button>
+        </div>
+      </div>
+
+      <!-- Timer Controls -->
+      <div class="controls" id="timer-ctrls">
+        <button class="btn btn-primary" data-action="timer-start">START</button>
+      </div>
+    </section>
+
+    <!-- ===== STOPWATCH ===== -->
+    <section class="panel" id="panel-stopwatch" role="tabpanel" aria-label="Stopwatch">
+      <div class="main-display" id="sw-display">
+        00:00:00<span class="ms">.000</span>
+      </div>
+      <div class="sw-precision" id="sw-precision">&#xB1;1ms &middot; performance.now()</div>
+
+      <div class="controls" id="sw-ctrls">
+        <button class="btn btn-primary" data-action="sw-start">START</button>
+      </div>
+
+      <div class="lap-container" id="lap-container">
+        <div class="lap-header hidden" id="lap-header">
+          <span class="lap-col">#</span>
+          <span class="lap-col">LAP</span>
+          <span class="lap-col">TOTAL</span>
+        </div>
+        <div class="lap-list" id="lap-list"></div>
+      </div>
+    </section>
+
+    <!-- ===== CLOCK ===== -->
+    <section class="panel" id="panel-clock" role="tabpanel" aria-label="World Clock">
+      <div class="clock-date" id="clock-date"></div>
+      <div class="main-display" id="clock-display">
+        00:00:00<span class="ms">.000</span>
+      </div>
+      <div class="clock-utc" id="clock-utc">UTC 00:00:00</div>
+
+      <div class="world-clocks" id="world-clocks"></div>
+
+      <div class="tz-add">
+        <select id="tz-select" aria-label="Add timezone">
+          <option value="">+ ADD TIMEZONE</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- ===== TOOLBAR ===== -->
+    <footer class="toolbar">
+      <button class="tool-btn active" id="btn-sound" title="Toggle sound [S]" aria-label="Toggle sound">
+        <span class="tool-icon">&#9835;</span>
+        <span class="tool-lbl">SOUND</span>
+      </button>
+      <button class="tool-btn" id="btn-wake" title="Keep screen awake [W]" aria-label="Keep screen awake">
+        <span class="tool-icon">&#9788;</span>
+        <span class="tool-lbl">AWAKE</span>
+      </button>
+      <button class="tool-btn" id="btn-fs" title="Fullscreen [F]" aria-label="Toggle fullscreen">
+        <span class="tool-icon">&#x26F6;</span>
+        <span class="tool-lbl">FULL</span>
+      </button>
+    </footer>
+  </main>
+
+  <!-- Keyboard shortcuts hint (desktop only) -->
+  <div class="kb-hint" id="kb-hint">
+    <kbd>SPACE</kbd> Start/Stop
+    <kbd>R</kbd> Reset
+    <kbd>L</kbd> Lap
+    <kbd>1-3</kbd> Modes
+    <kbd>F</kbd> Fullscreen
+    <kbd>ESC</kbd> Dismiss
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
