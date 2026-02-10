@@ -1035,9 +1035,50 @@
     }
   }
 
+  // ── PWA Install Prompt ──────────────────────────────────────────
+  let deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const banner = $('#install-banner');
+    if (banner) banner.classList.remove('hidden');
+  });
+
+  function setupInstallButton() {
+    const btnInstall = $('#btn-install');
+    const btnDismiss = $('#install-dismiss');
+    const banner = $('#install-banner');
+    if (!btnInstall || !banner) return;
+
+    btnInstall.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const result = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      banner.classList.add('hidden');
+      if (result.outcome === 'accepted') {
+        // Installed successfully
+      }
+    });
+
+    btnDismiss.addEventListener('click', () => {
+      banner.classList.add('hidden');
+      deferredPrompt = null;
+    });
+  }
+
+  // Hide install banner if already in standalone mode
+  window.addEventListener('appinstalled', () => {
+    const banner = $('#install-banner');
+    if (banner) banner.classList.add('hidden');
+    deferredPrompt = null;
+  });
+
   // ── Initialize ─────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
     new App();
+    setupInstallButton();
   });
 
   // ── Register Service Worker ────────────────────────────────────

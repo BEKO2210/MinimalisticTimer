@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>PRECISION TIMER</title>
   <meta name="description" content="Professional precision timer, stopwatch &amp; world clock PWA">
   <meta name="theme-color" content="#000000">
@@ -123,15 +123,23 @@
       </div>
     </section>
 
+    <!-- ===== INSTALL BANNER ===== -->
+    <div class="install-banner hidden" id="install-banner">
+      <button class="btn btn-primary install-btn" id="btn-install">
+        INSTALL APP
+      </button>
+      <button class="install-dismiss" id="install-dismiss" aria-label="Dismiss">&times;</button>
+    </div>
+
     <!-- ===== TOOLBAR ===== -->
     <footer class="toolbar">
       <button class="tool-btn active" id="btn-sound" title="Toggle sound [S]" aria-label="Toggle sound">
         <span class="tool-icon">&#9835;</span>
         <span class="tool-lbl">SOUND</span>
       </button>
-      <button class="tool-btn" id="btn-wake" title="Keep screen awake [W]" aria-label="Keep screen awake">
+      <button class="tool-btn" id="btn-wake" title="Bildschirm anlassen [W]" aria-label="Bildschirm anlassen">
         <span class="tool-icon">&#9788;</span>
-        <span class="tool-lbl">AWAKE</span>
+        <span class="tool-lbl">SCREEN</span>
       </button>
       <button class="tool-btn" id="btn-fs" title="Fullscreen [F]" aria-label="Toggle fullscreen">
         <span class="tool-icon">&#x26F6;</span>

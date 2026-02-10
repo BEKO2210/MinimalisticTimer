@@ -37,7 +37,10 @@ body {
   align-items: center;
   justify-content: center;
   overflow-x: hidden;
+  overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
   user-select: none;
   text-transform: uppercase;
 }
@@ -614,6 +617,57 @@ kbd {
 @media (hover: hover) and (pointer: fine) {
   .kb-hint {
     display: block;
+  }
+}
+
+/* --- Install Banner --- */
+.install-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--fg);
+  z-index: 100;
+  animation: slide-down 0.3s var(--ease);
+}
+
+@keyframes slide-down {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+.install-btn {
+  border: 2px solid var(--bg) !important;
+  padding: 0.5rem 1.5rem !important;
+  font-size: 0.75rem !important;
+  min-width: auto !important;
+}
+
+.install-dismiss {
+  background: none;
+  border: none;
+  color: var(--bg);
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-family: var(--font);
+  padding: 0.25rem 0.5rem;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+
+.install-dismiss:hover {
+  opacity: 1;
+}
+
+/* --- Standalone (installed) tweaks --- */
+@media (display-mode: standalone) {
+  .install-banner {
+    display: none !important;
   }
 }
 
